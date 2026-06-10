@@ -75,7 +75,11 @@ const PROCESSING_STAGES = [
 ];
 
 export default function TopUpPage() {
-  const [step, setStep] = useState<Step>("amount");
+  // __REMOTION_STEP__: video-render pins the step for deterministic frames.
+  // Unset in the real app — zero behavior change in production.
+  const [step, setStep] = useState<Step>(
+    () => (typeof window !== "undefined" && (window as unknown as { __REMOTION_STEP__?: Step }).__REMOTION_STEP__) || "amount"
+  );
   const [idr, setIdr] = useState<number>(150000);
   const [stage, setStage] = useState(0);
 
